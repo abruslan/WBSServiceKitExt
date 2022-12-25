@@ -1,0 +1,83 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Request.IndexModel
+
+@{
+    ViewData["Title"] = "Заявки";
+    ViewData["PageTheme"] = "fullpage";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel())
+}
+
+<h1>Список заявок</h1>
+<hr />
+<p>
+    <a class="btn btn-outline-primary" asp-page="Load"><i class="bi bi-upload"></i> Загрузить из файла</a>
+    <a class="btn btn-outline-primary popupform" asp-page="Create"><i class="bi bi-pencil-square"></i> Создать вручную</a>
+</p>
+<table class="table datatable sortable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_Request[0].ProjectCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_Request[0].ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_Request[0].RequestType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_Request[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_Request[0].CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_Request[0].Created)
+            </th>
+            <th class="no-sort"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WBS_Request)
+        {
+            <tr>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.ProjectCode)
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.RequestType)
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </a>
+                </td>
+                <td data-sort="@item.Created?.ToString("yyyy.MM.dd HH:mm:ss")">
+                    <a asp-page="./Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </a>
+                </td>
+                <td class="nowrap">
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="popupform"><img src="~/images/pencil.svg" /></a>&nbsp;
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="popupform"><img src="~/images/delete.svg" /></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,67 @@
+﻿@model ServiceKit.WBS.Pages.Request.DetailsModel
+
+<style>
+    tr.level1 { background-color: #85ebb6 !important; }
+    tr.level2 { background-color: #ffff99 !important; }
+    td.level2 { padding-left: 25px !important; }
+    td.level3 { padding-left: 50px !important; }
+</style>
+<div>
+    @*<p>
+        <a asp-page="ItemCreate" asp-route-parentid="@Model.WBS_Request.Id" class="popupform">Добавить новую запись</a>
+    </p>*@
+    <table class="table datatable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.ProjectItems[0].Level)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.ProjectItems[0].ShortCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.ProjectItems[0].FullCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.ProjectItems[0].ShortName)
+                </th>
+                <th>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.ProjectItems[0].Comment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.ProjectItems[0].Full1CName)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.WBS_Request.ProjectItems.Where(r => !r.IsDeleted).OrderBy(r => r.OrderNum))
+            {
+                <tr class="level@(item.Level) @(item.hasError() ? "table-danger" : "")" title="@item.ErrorMessage">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Level)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShortCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullCode)
+                    </td>
+                    <td class="level@(item.Level)">
+                        @Html.DisplayFor(modelItem => item.ShortName)
+                    </td>
+                    <td>
+                        <a asp-page="./RequestProjectItemEdit" asp-route-id="@item.Id" class="popupform"><img src="~/images/pencil.svg" /></a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Full1CName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,85 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Dictionary.SyncSystems.DetailsModel
+
+@{
+    ViewData["Title"] = "Системы для публикации";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Справочники", "/Dictionary/Index").Add("Системы для публикации", "/Dictionary/SyncSystems/Index"))
+}
+
+<div>
+    <h4>Просмотр</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.SystemType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.SystemType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.ConnectionString)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.ConnectionString)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.TrustedConnection)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.TrustedConnection)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.Login)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.Login)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.IsDeleted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.IsDeleted)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.Created)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.Created)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.ModifiedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.ModifiedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_SyncSystem.Modified)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_SyncSystem.Modified)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.WBS_SyncSystem.Id">Редактировать</a>
+</div>

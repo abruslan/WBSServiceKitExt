@@ -1,0 +1,65 @@
+﻿@model ServiceKit.WBS.Pages.Request.DetailsModel
+
+<div>
+    @if (Model.WBS_Request.Status == WBS_RequestStatus.New)
+    {
+        <hr />
+        <p>
+            <a asp-page="ItemCreate" asp-route-parentid="@Model.WBS_Request.Id" class="popupform">Добавить новую запись</a>
+        </p>
+    }
+    <table class="table datatable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.Changes[0].Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.Changes[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.Changes[0].Comment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.Changes[0].NewCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.Changes[0].NewName)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.WBS_Request.ProjectItems[0].Full1CName)
+                </th>*@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.WBS_Request.Changes.Where(r => !r.IsDeleted))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NewCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NewName)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Full1CName)
+                    </td>*@
+                    <td class="nowrap">
+                        <a asp-page="./ItemEdit" asp-route-id="@item.Id" class="popupform"><img src="~/images/pencil.svg" /></a>&nbsp;
+                        <a asp-page="./ItemDelete" asp-route-id="@item.Id" class="popupform"><img src="~/images/delete.svg" /></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

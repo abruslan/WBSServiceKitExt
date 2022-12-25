@@ -1,0 +1,52 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Request.ItemCreateModel
+@{
+    Layout = null;
+}
+
+<form method="post" asp-page="ItemCreate">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Новая запись</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="ParentId" hidden />
+
+                <div class="form-group">
+                    <label asp-for="WBS_RequestItem.Code" class="control-label"></label>
+                    <input asp-for="WBS_RequestItem.Code" class="form-control" />
+                    <span asp-validation-for="WBS_RequestItem.Code" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="WBS_RequestItem.Name" class="control-label"></label>
+                    <input asp-for="WBS_RequestItem.Name" class="form-control" />
+                    <span asp-validation-for="WBS_RequestItem.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="WBS_RequestItem.Comment" class="control-label"></label>
+                    <input asp-for="WBS_RequestItem.Comment" class="form-control" />
+                    <span asp-validation-for="WBS_RequestItem.Comment" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="WBS_RequestItem.NewCode" class="control-label"></label>
+                    <input asp-for="WBS_RequestItem.NewCode" class="form-control" />
+                    <span asp-validation-for="WBS_RequestItem.NewCode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="WBS_RequestItem.NewName" class="control-label"></label>
+                    <input asp-for="WBS_RequestItem.NewName" class="form-control" />
+                    <span asp-validation-for="WBS_RequestItem.NewName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>

@@ -1,0 +1,58 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Request.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = null;
+}
+
+<form method="post" asp-page="Delete">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Вы уверены, что хотите удалить заявку?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div>
+            <dl class="row">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.WBS_Request.Status)
+                </dt>
+                <dd class="col-sm-6">
+                    @Html.DisplayFor(model => model.WBS_Request.Status)
+                </dd>
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.WBS_Request.ProjectCode)
+                </dt>
+                <dd class="col-sm-6">
+                    @Html.DisplayFor(model => model.WBS_Request.ProjectCode)
+                </dd>
+                <dt class="col-sm-12">
+                    @Html.DisplayNameFor(model => model.WBS_Request.ProjectName)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.WBS_Request.ProjectName)
+                </dd>
+                @*<dt class="col-sm-12">
+                    @Html.DisplayNameFor(model => model.WBS_Request.CreatedBy)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.WBS_Request.CreatedBy)
+                </dd>
+                <dt class="col-sm-12">
+                    @Html.DisplayNameFor(model => model.WBS_Request.Created)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.WBS_Request.Created)
+                </dd>*@
+            </dl>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input type="hidden" asp-for="WBS_Request.Id" name="Id"/>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+    </div>
+</form>

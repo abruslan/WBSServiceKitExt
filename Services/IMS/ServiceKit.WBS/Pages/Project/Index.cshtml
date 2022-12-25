@@ -1,0 +1,68 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Project.IndexModel
+
+@{
+    ViewData["Title"] = "Проекты";
+    ViewData["PageTheme"] = "fullpage";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel())
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    <a asp-page="Create">Создать новый проект</a>
+</p>
+
+<table class="table datatable sortable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_Project[0].ProjectCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_Project[0].ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_Project[0].Modified)
+            </th>
+            @if (User.IsInRole(RoleProvider.Writer))
+            {
+            <th class="no-sort"></th>
+            <th class="no-sort"></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WBS_Project)
+        {
+            <tr>
+                <td>
+                    <a asp-page="./Item" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.ProjectCode)
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="./Item" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="./Item" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Modified)
+                    </a>
+                </td>
+                @if (User.IsInRole(RoleProvider.Writer))
+                {
+                <td>
+                    <a asp-page="./Card" asp-route-id="@item.Id">Карточка публикации</a>
+                </td>
+                <td class="nowrap">
+                    <a asp-page="./Edit" asp-route-id="@item.Id"><img src="~/images/pencil.svg" /></a>&nbsp;
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="popupform"><img src="~/images/delete.svg" /></a>
+                </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

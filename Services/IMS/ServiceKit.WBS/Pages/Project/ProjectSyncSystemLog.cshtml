@@ -1,0 +1,84 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Project.ProjectSyncSystemLogModel
+@{
+    ViewData["Title"] = "Журнал синхронизации проекта " + Model.WBS_Project.ProjectCode + " c " + Model.WBS_SyncSystem.Name;
+    ViewData["PageTheme"] = "fullpage";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Проекты", "/Project/Index").Add($"Проект {Model.WBS_Project.ProjectCode}", $"/Project/Card?id={Model.WBS_Project.Id}"))
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    <div id="table-filter-container" style="padding-bottom: 20px;">
+        <div class="pull-right" style="padding-left: 12px;">
+            <input type="checkbox" id="filter-show-all" name="filter-show-all" onclick="updateFilter(this);" /><label for="filter-show-all">&nbsp;Показывать записи без изменений</label>
+        </div>
+    </div>
+</p>
+
+<table class="table datatable sortable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncRequestItems[0].FullCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncRequestItems[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncRequestItems[0].Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncRequestItems[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncRequestItems[0].ErrorMessage)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WBS_SyncRequestItems.OrderBy(r => r.FullCode))
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ErrorMessage)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+<script>
+        $(document).ready(function () {
+        });
+
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                console.log('push');
+                var showall = $('#filter-show-all')[0].checked;
+                if (showall)
+                    return true;
+                return data[2] != "Новое название совпадает со старым. Запись оставлена без изменений в справочнике ИСР";
+            }
+        );
+
+        function updateFilter(el) {
+            $('.datatable').DataTable().draw();
+        }
+        //updateFilter();
+</script>
+}

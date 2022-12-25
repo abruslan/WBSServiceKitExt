@@ -1,0 +1,73 @@
+﻿@using ServiceKit.CSIT.CSP.Data.Entry
+@model Register
+@{
+    RegisterItem RegisterItem = new RegisterItem();
+}
+
+<table class="table datatable sortable" id="Register1">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => RegisterItem.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => RegisterItem.ServiceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => RegisterItem.ClientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => RegisterItem.ClientINN)
+            </th>
+            <th>
+                Раб. мест
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => RegisterItem.PeriodFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => RegisterItem.PeriodTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => RegisterItem.DayCount)
+            </th>
+            <th>
+                Тариф
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientINN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkPlaceCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeriodFrom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeriodTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegisterRateText)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

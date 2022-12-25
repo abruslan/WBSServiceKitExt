@@ -1,0 +1,82 @@
+﻿:root {
+    --warning-cell: #ffcccc;
+}
+tr.no-sort th::after, th.no-sort::after {
+    display: none !important;
+}
+
+tr.no-sort th, th.no-sort {
+    pointer-events: none !important;
+    cursor: default !important;
+    background-image: none !important;
+}
+
+table.datatable {
+  font-family: Inter;
+}
+
+table.dataTable tbody tr {
+    background-color: #fff;
+}
+
+.brand table.datatable {
+    border-bottom: 1px solid var(--text-gray) !important;
+}
+
+
+.brand .datatable th {
+    color: var(--text-primary);
+}
+
+.brand .datatable td {
+    color: var(--text-black);
+}
+
+.table thead th {
+    border-bottom: 1px solid #dee2e6 !important;
+    color: var(--text-primary);
+}
+
+
+.dataTables_length {
+  padding-top: .5em;
+}
+
+.exportbuttons {
+  padding-top: .5em;
+}
+
+/* trash */
+.datatable th {
+    _border-right: 5px double #dee2e6;
+}
+
+.datatable tr th {
+    font-size: 14px;
+}
+.datatable tr td {
+    font-size: 14px;
+}
+
+.datatable tr td.empty {
+    background-color: var(--warning-cell);
+}
+.datatable tr td.full {
+    background-color: #ccffdd;
+}
+
+.datatable tr.Imported td {
+    background-color: rgb(102, 153, 255, 0.2);
+}
+.datatable tr.Checking td {
+    background-color: rgb(0, 255, 204, 0.2);
+}
+.datatable tr.Checked td {
+    background-color: rgb(102, 255, 153, 0.4);
+}
+.datatable tr.Closed td {
+    background-color: rgb(102, 102, 153, 0.2);
+}
+.datatable tr.Archived td {
+    background-color: rgb(153, 153, 255, 0.2);
+}

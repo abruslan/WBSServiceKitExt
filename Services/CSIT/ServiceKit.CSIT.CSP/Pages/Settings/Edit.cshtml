@@ -1,0 +1,40 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.Settings.EditModel
+
+@{
+    ViewData["Title"] = "Настройки";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel())
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Setting.CreatedBy" />
+            <input type="hidden" asp-for="Setting.Created" />
+            <input type="hidden" asp-for="Setting.ModifiedBy" />
+            <input type="hidden" asp-for="Setting.Modified" />
+            <input type="hidden" asp-for="Setting.Id" />
+            <div class="form-group">
+                <label asp-for="Setting.Signer" class="control-label"></label>
+                <select asp-for="Signer" class="form-control select2" asp-items="Model.Signers">
+                    <option value="">Выберите значение</option>
+                </select>
+                <span asp-validation-for="Setting.Signer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-secondary" asp-page="/CSP/Index">Отмена</a>
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

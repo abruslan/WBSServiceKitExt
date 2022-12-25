@@ -1,0 +1,33 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.CSP.LoadModel
+
+@{
+    ViewData["Title"] = "Загрузка реестра CSP";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Реестр", "/CSP/Index"))
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@*<h4>Выберите файл для загрузки</h4>
+<hr />*@
+<div class="row pt-4">
+    <div class="col-md-12">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Upload" class="control-label">Выберите файл в формате xlsx для загрузки. Если у вас есть файл в старом формате (Excel 97-2003), необходимо открыть файл в Excel и сохранить файл в формате Excel.</label>
+                <input type="file" asp-for="Upload" class="w-100" />
+                <span asp-validation-for="Upload" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Загрузить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

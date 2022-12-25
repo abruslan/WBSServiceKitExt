@@ -1,0 +1,40 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.Signature.IndexModel
+
+@{
+    ViewData["Title"] = "Подписанты";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel())
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-page="Create">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Signer[0].Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Signer)
+        {
+            <tr>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </a>
+                </td>
+                <td>
+                    <a asp-page="./Delete" asp-route-id="@item.Id"><img src="~/images/delete.svg"/></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

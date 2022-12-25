@@ -1,0 +1,238 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+:root {
+    --color-primary: #4E67AF;
+    --color-active: #8BBB2B;
+    --color-active-shadow: rgba(139, 187, 43, 0.5);
+    --color-icon: #9EAAB4;
+    --color-disabled: #C6CCD1;
+    --bg-gray: #e3e4ea;
+    --bg-primary: #4E67AF;
+    --sidebar-bg: #444f6f;
+    --sidebar-bg-active: #2c354f;
+    --control-label: #989898;
+    --text-gray: #dae0e5;
+    --text-darkgray: #828589;
+    --text-primary: #4E67AF;
+    --text-warning: #dc3545;
+    --text-black: #31343d;
+    --text-red: #dd3126;
+    --text-blue: rgba(156, 175, 239);
+    --text-gray-old: rgba(0, 0, 0, 0.075);
+    --scrollbar: rgba(78, 103, 175, 0.5);
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("/fonts/Inter/static/Inter-Regular.ttf") format("truetype"), url("/fonts/Inter/static/Inter-SemiBold.ttf") format('truetype');
+}
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.fullpage .container {
+    max-width: 1600px !important;
+}
+
+.preloader {
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.preloader__loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+  font-family: Inter;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+
+
+/* */
+/* --------------------------------------------- */
+
+a.nounderline:link, a.nounderline:visited, a.nounderline:hover, a.nounderline:active {
+    text-decoration: none;
+}
+
+.white-page {
+    border: 1px solid lightgray;
+    margin: 20px;
+    padding: 10px 20px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.white-info {
+    padding: 20px 0px;
+}
+
+.alert-info {
+    background-color: #AED6F1 !important;
+    border-color: #AED6F1 !important;
+    color: #273746 !important;
+}
+
+.alert-info a {
+    color: #273746;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+/* BREADCRUMB */
+.breadcrumb {
+    padding: 0;
+    margin-bottom: 14px;
+}
+.breadcrumb, .breadcrumb, .breadcrumb ol {
+    color: var(--color-primary);
+    background-color: transparent;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+.breadcrumb-item.current {
+    color: #1861ac;
+    font-weight: 600;
+}
+.breadcrumb-arrow {
+    _color: #43F1FF;
+    padding: 0 5px 0 5px !important;
+}
+
+
+.collapsed-content .collapsed-content-body {
+    height: 0;
+    overflow: hidden;
+    -moz-animation-delay: 3.5s;
+    -webkit-animation-delay: 3.5s;
+    -o-animation-delay: 3.5s;
+    animation-delay: 3.5s;
+}
+
+.collapsed-content.active .collapsed-content-body {
+    height: inherit;
+    overflow: inherit;
+    -moz-animation-delay: 3.5s;
+    -webkit-animation-delay: 3.5s;
+    -o-animation-delay: 3.5s;
+    animation-delay: 3.5s;
+}
+
+.collapsed-content-title {
+    padding: 5px 0 15px 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1861ac;
+}
+
+.collapsed-content.active .collapsed-content-title-expand:before {
+    content: url(/icons/icons/chevron-down.svg);
+    padding-right: 15px;
+}
+
+.collapsed-content .collapsed-content-title-expand:before {
+    content: url(/icons/icons/chevron-up.svg);
+    padding-right: 15px;
+}
+
+
+
+.dark dl dd {
+    color: white;
+}
+.dark dl dt {
+    color: white;
+}

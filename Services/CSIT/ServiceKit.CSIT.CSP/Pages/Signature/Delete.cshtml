@@ -1,0 +1,37 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.Signature.DeleteModel
+
+@{
+    ViewData["Title"] = "Подписанты";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Подписанты", "/Signature/Index"))
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Вы уверены, что хотите удалить запись?</h3>
+<div>
+    <h4>Signer</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Signer.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Signer.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Signer.FullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Signer.FullName)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Signer.Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-page="/Signature/Index">Отменить</a>
+    </form>
+</div>

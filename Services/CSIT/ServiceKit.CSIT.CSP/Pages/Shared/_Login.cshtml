@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/features.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/lib/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/css/login.css" asp-append-version="true">
+
+</head>
+<body>
+    <div class="limiter">
+        <div class="text-center container-login100">
+            <div class="login100-form-title p-t-40 w-75">
+                @ViewData["Title"]
+            </div>
+        </div>
+        <div class="container-login100">
+            <div class="wrap-login100 p-t-40 p-b-20">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/animsition/js/animsition.min.js"></script>
+    @*<script src="vendor/bootstrap/js/popper.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/select2/select2.min.js"></script>
+    <script src="~/lib/daterangepicker/moment.min.js"></script>
+    <script src="~/lib/daterangepicker/daterangepicker.js"></script>
+    <script src="~/lib/countdowntime/countdowntime.js"></script>
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
+    <script src="~/js/login.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

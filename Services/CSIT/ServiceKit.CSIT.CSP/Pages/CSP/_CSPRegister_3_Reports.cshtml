@@ -1,0 +1,70 @@
+﻿@using ServiceKit.CSIT.CSP.Data.Entry
+@model ServiceKit.CSIT.CSP.Pages.CSP.DetailsModel
+@{
+}
+
+<table class="table datatable" id="Register3">
+    <thead>
+        <tr>
+            <th>
+                Клиент
+            </th>
+            <th>
+                Сумма
+            </th>
+            <th class="nosort">
+                Месячный отчет
+            </th>
+            <th class="nosort">
+                Годовой отчет
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model.Register.Items.GroupBy(r => new { r.Client.Name, r.Client.Id, r.Client.Contract }).ToList())
+        {
+            <tr>
+                <td>
+                    @client.Key.Name
+                </td>
+                <td  class="text-right">
+                    @client.Sum(r => r.Total()).ToString("N")
+                </td>
+                <td>
+                    @{ var monthcount = client.Count(r => r.RegisterRatePeriod == PeriodType.Month); }
+                    @if (monthcount > 0)
+                    {
+                        foreach (var annex in Model.GetAnnexList(client.Key.Id, client.Key.Name, PeriodType.Month))
+                        {
+                        <a class="popupform-lg nounderline" asp-page="/Report/Dialog" asp-route-view="ClientMonthReport" asp-route-register="@Model.Register.Id" asp-route-client="@client.Key.Id" asp-route-annex="@annex?.Id">
+                            <i class="bi bi-file-earmark-word"></i> @client.Key.Contract @annex?.Name
+                        </a>
+                        <span>|</span>
+                        <a class="popupform-lg nounderline" asp-page="/Report/Dialog" asp-route-view="ClientMonthReport" asp-route-register="@Model.Register.Id" asp-route-client="@client.Key.Id" asp-route-annex="@annex?.Id" asp-route-debug="1">
+                            <i class="bi bi-calculator">внутренний</i>
+                        </a>
+                        <br />
+                        }
+                    }
+                </td>
+                <td>
+                    @{ var yearcount = client.Count(r => r.RegisterRatePeriod == PeriodType.Year); }
+                    @if (yearcount > 0)
+                    {
+                        foreach (var annex in Model.GetAnnexList(client.Key.Id, client.Key.Name, PeriodType.Year))
+                        {
+                        <a class="popupform-lg nounderline" asp-page="/Report/Dialog" asp-route-view="ClientYearReport" asp-route-register="@Model.Register.Id" asp-route-client="@client.Key.Id" asp-route-annex="@annex?.Id">
+                            <i class="bi bi-file-earmark-word"></i> @client.Key.Contract @annex?.Name
+                        </a>
+                        <span>|</span>
+                        <a class="popupform-lg nounderline" asp-page="/Report/Dialog" asp-route-view="ClientYearReport" asp-route-register="@Model.Register.Id" asp-route-client="@client.Key.Id" asp-route-annex="@annex?.Id" asp-route-debug="1">
+                            <i class="bi bi-calculator"> внутренний </i>
+                        </a>
+                        <br />
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

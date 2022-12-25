@@ -1,0 +1,100 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.Account.ManageUsersModel
+@{
+    ViewData["Title"] = "Управление пользователями";
+ Layout = "~/Pages/Shared/_Layout.cshtml";
+ int i = 0;
+}
+
+<table id="datatable" class="table dt-responsive" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Аккаунт</th>
+            <th>Email подтвержден</th>
+            <th>Администратор</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var evalUser in Model.Users.ToList())
+        {
+            <tr>
+                <td>@evalUser.UserName</td>
+                <td>
+                    @*<input type="checkbox" checked="@evalUser.EmailConfirmed" disabled>*@
+                    <form method="POST">
+                        <input type="checkbox" class="done-checkbox" checked="@evalUser.EmailConfirmed">
+                        <input type="hidden" name="user" value="@evalUser.UserName">
+                        <input type="hidden" name="action" value="emailconfirm">
+                        <input type="hidden" name="value" value="@(evalUser.EmailConfirmed ? 0 : 1)">
+                    </form>
+                </td>
+                <td>
+                    <form method="POST">
+                        <input type="checkbox" class="done-checkbox" checked="@(Model.UserIsAdminAsync(evalUser))">
+                        <input type="hidden" name="user" value="@evalUser.UserName">
+                        <input type="hidden" name="action" value="setadmin">
+                        <input type="hidden" name="value" value="@(Model.UserIsAdminAsync(evalUser) ? 0 : 1)">
+                    </form>
+                </td>
+                <td>
+                    <a class="btn btn-secondary" asp-page="/Account/ManageUserRoles" asp-route-userid="@evalUser.Id">Права&nbsp;доступа</a>
+                </td>
+                <td>
+                    <a id="" class="btn btn-danger" href="#delete-confirm-@(i++)" data-toggle="modal">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Wire up all of the checkboxes to run markCompleted()
+            $('.done-checkbox').on('click', function (e) {
+                markCompleted(e.target);
+            });
+        });
+
+        function markCompleted(checkbox) {
+            checkbox.disabled = true;
+            var row = checkbox.closest('tr');
+            $(row).addClass('done');
+            var form = checkbox.closest('form');
+            form.submit();
+        }
+    </script>
+
+    @* todo: сделать адекватный механизм удаления *@
+    @{i = 0;};
+    @foreach (var evalUser in Model.Users.ToList())
+    {
+        <div class="modal fade" id="delete-confirm-@(i++)">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <div class="pt-1"><svg class="bi" width="64" height="64" fill="currentColor" color="red"><use xlink:href="/icons/bootstrap-icons.svg#exclamation-octagon-fill" /></svg></div>
+                            <br /><br />
+                            <p class="brand">Вы действительно хотите удалить пользователя @evalUser.UserName?</p>
+                            <div class="pt-3 d-inline-flex">
+                                <form method="POST">
+                                    <button class="btn btn-danger">Да, удалить!</button>
+                                    <input type="hidden" name="user" value="@evalUser.UserName">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="value" value="@(Model.UserIsAdminAsync(evalUser) ? 0 : 1)">
+                                </form>
+                                <span>&nbsp;&nbsp;</span>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+}

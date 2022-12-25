@@ -1,0 +1,36 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.CSP.ClientAnnexEditModel
+@{
+    Layout = null;
+}
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="ClientAnnex.Id" />
+    <input type="hidden" asp-for="registerId" />
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Приложение договора</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label asp-for="ClientAnnex.Name" class="control-label"></label>
+            <input asp-for="ClientAnnex.Name" class="form-control" />
+            <span asp-validation-for="ClientAnnex.Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <input type="submit" value="Сохранить" class="btn btn-primary" asp-page="ClientAnnexEdit" />
+    </div>
+</form>
+<script>
+    setTimeout(function (e) { document.getElementById('ClientAnnex_Name').focus(); }, 500);
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,73 @@
+﻿@using ServiceKit.CSIT.CSP.Data.Entry
+@model ServiceKit.CSIT.CSP.Pages.CSP.DetailsModel
+@{
+}
+
+<table class="table datatable" id="Register2">
+    <thead>
+        <tr>
+            <th>
+                Клиент
+            </th>
+            <th>
+                ИНН
+            </th>
+            <th>
+                Договор
+            </th>
+            <th>
+                Приложение
+            </th>
+            <th>
+                Услуга
+            </th>
+            <th>
+                Цена, <br />руб./мес.
+            </th>
+            <th>
+                Цена, <br />руб./год
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model.GetAppropriateServices())
+        {
+            <tr>
+                <td class="@Model.EmptyClass(service.Client.Contract)">
+                    <a asp-page="./ClientEdit" asp-route-id="@service.Client.Id" asp-route-register="@Model.Register.Id" class="popupform">
+                        @Html.DisplayFor(modelItem => service.Client.Name)
+                    </a>
+                </td>
+                <td class="@Model.EmptyClass(service.Client.Contract)">
+                    @Html.DisplayFor(modelItem => service.Client.INN)
+                </td>
+                <td class="@Model.EmptyClass(service.Client.Contract)">
+                    @Html.DisplayFor(modelItem => service.Client.Contract)
+                </td>
+                <td class="@Model.EmptyClass(service.Price + service.YearPrice)">
+                    <a asp-page="./ClientAnnexEdit" asp-route-id="@service.ClientAnnex?.Id" asp-route-register="@Model.Register.Id" class="popupform">
+                        @service.ClientAnnex?.Name
+                    </a>
+                </td>
+                <td class="@Model.EmptyClass(service.Price + service.YearPrice)">
+                    @if (service.Client != null)
+                    {
+                        <a asp-page="./ClientServiceEdit" asp-route-id="@service.Id" asp-route-register="@Model.Register.Id" class="popupform">
+                            @Html.DisplayFor(modelItem => service.OriginalName)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => service.OriginalName)
+                    }
+                </td>
+                <td class="@Model.EmptyClass(service.Price + service.YearPrice) text-right">
+                    @service.Price.ToString("N")
+                </td>
+                <td class="@Model.EmptyClass(service.Price + service.YearPrice) text-right">
+                    @service.YearPrice.ToString("N")
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

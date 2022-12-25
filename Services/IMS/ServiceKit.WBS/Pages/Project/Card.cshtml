@@ -1,0 +1,135 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Project.CardModel
+
+@{
+    ViewData["Title"] = "Карточка публикации проекта " + Model.WBS_Project.ProjectCode;
+    ViewData["PageTheme"] = "fullpage";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Проекты", "/Project/Index").Add("Проект " + Model.WBS_Project.ProjectCode, $"/Project/Item?id={@Model.WBS_Project.Id}"))
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_Project.ProjectCode) 
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-page="/Project/Item" asp-route-id="@Model.WBS_Project.Id">@Html.DisplayFor(model => model.WBS_Project.ProjectCode)</a>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WBS_Project.ProjectName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WBS_Project.ProjectName)
+        </dd>
+        <dt class="col-sm-2">
+            Публикация в системах
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PublishList 
+            <a class="popupform" asp-page="./ProjectPublished" asp-route-id="@Model.WBS_Project.Id"><img src="~/images/pencil.svg" /></a>
+        </dd>
+    </dl>
+</div>
+<div>
+    <form method="post">
+        <div class="d-flex">
+            <button type="submit" name="save" asp-page-handler="Sync" asp-route-id="@Model.WBS_Project.Id" class="btn btn-primary m-2 confirm-action"
+                    data-submit-text="Публикация"
+                    data-text="Выполнить публикацию во внешние системы?">
+                <i class="bi-check-circle"></i>&nbsp;Публикация
+            </button>
+            <button type="submit" name="exportjson" asp-page-handler="ExportJson" asp-route-id="@Model.WBS_Project.Id" class="btn btn-secondary m-2 ml-auto"
+                    data-submit-text="Экспорт в json"
+                    data-text="Выполнить экспорт проекта в json?">
+                <i class="bi-check-circle"></i>&nbsp;Экспорт в json
+            </button>
+        </div>
+    </form>
+</div>
+<div>
+    <hr />
+    <h5>Журнал синхронизации</h5>
+</div>
+
+<div>
+    <table class="table datatable">
+        <thead>
+            <tr>
+                <th>
+                    Дата / время публикации
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_SyncLog[0].Success)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_SyncLog[0].Message)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WBS_SyncLog[0].RequestId)
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.WBS_SyncLog.OrderByDescending(r => r.Created))
+            {
+                <tr>
+                    <td>
+                        <a asp-page="./ProjectSyncLog" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Created)
+                        </a>
+                    </td>
+                    <td>
+                        @(item.Success ? "Успешно" : "Ошибка")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestId)
+                    </td>
+                    <td>
+                        @if (item.Items.Any(r => r.SyncSystemId != null))
+                        { 
+                            @foreach (var system in item.Items.Where(r => r.SyncSystemId != null).GroupBy(r => r.SyncSystem))
+                            {
+                                var textClass = "text-success";
+                                textClass = system.Any(r => r.Level == 1) ? "text-warning" : "";
+                                textClass = system.Any(r => r.Level == 2) ? "text-danger" : "";
+
+                                <a asp-page="./ProjectSyncSystemLog" asp-route-id="@Model.WBS_Project.Id" asp-route-system="@system.Key.Id" asp-route-request="@item.RequestId" 
+                                   class="p-r-3 p-l-3 @textClass">
+                                    @system.Key.Name
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            <div class="">
+                                <div>Данных нет</div>
+                                <div onclick="$(this).next().slideToggle();" style="cursor: pointer;">(смотреть все)</div>
+                                <div style="display: none;">
+                                    @foreach (var system in Model.SyncedSystems)
+                                    {
+                                        <a asp-page="./ProjectSyncSystemLog" asp-route-id="@Model.WBS_Project.Id" asp-route-system="@system.Id" asp-route-request="@item.RequestId" 
+                                           class="p-r-3 p-l-3">
+                                            @system.Name
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>

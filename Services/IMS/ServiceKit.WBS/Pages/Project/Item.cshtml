@@ -1,0 +1,76 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Project.ItemModel
+
+@{
+    ViewData["Title"] = "Проект " + Model.WBS_Project.ProjectCode;
+    ViewData["PageTheme"] = "fullpage";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Проекты", "/Project/Index"))
+}
+
+@if (User.IsInRole(RoleProvider.Writer))
+{
+<div class="float-right"><a asp-page="/Project/Card" asp-route-id="@Model.WBS_Project.Id" title="Карточка публикации"><i class="bi-journal-text"></i></a></div>
+}
+<h1>
+    @ViewData["Title"]
+</h1>
+
+<style>
+    tr.level1 { background-color: #85ebb6 !important; }
+    tr.level2 { background-color: #ffff99 !important; }
+    td.level2 { padding-left: 25px !important; }
+    td.level3 { padding-left: 50px !important; }
+</style>
+
+<table class="table datatable">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.WBS_ProjectItem[0].ShortCode)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_ProjectItem[0].FullCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_ProjectItem[0].ShortName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_ProjectItem[0].Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_ProjectItem[0].Level)
+            </th>
+            <th>@Html.DisplayNameFor(model => model.WBS_ProjectItem[0].Full1CName)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WBS_ProjectItem.OrderBy(r => r.FullCode))
+        {
+        <tr class="level@(item.Level)">
+            <th>
+                @Html.DisplayFor(modelItem => item.FullCode)
+            </th>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.ShortCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullCode)
+            </td>*@
+            <td class="level@(item.Level)">
+                @Html.DisplayFor(modelItem => item.ShortName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level)
+            </td>
+            <td>
+                @Model.Full1CName(item)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

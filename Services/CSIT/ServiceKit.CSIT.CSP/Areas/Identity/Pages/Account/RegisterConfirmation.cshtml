@@ -1,0 +1,16 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Подтверждение регистрации";
+    Layout = "~/Pages/Shared/_Login.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    Ваша заявка на регистрацию принята. После подтверждения заявки администратором Вы получите уведомление об успешной регистрации.
+</p>
+<ul class="login-more p-t-30">
+    <li>
+        <a asp-page="./Login">Вернуться на страницу входа</a>
+    </li>
+</ul>

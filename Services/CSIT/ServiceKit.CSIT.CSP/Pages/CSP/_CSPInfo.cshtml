@@ -1,0 +1,77 @@
+﻿@model ServiceKit.CSIT.CSP.Data.Entry.Register
+@{
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dd class="col-sm-6">
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Contractor)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Contractor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContractorINN)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.ContractorINN)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerINN)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.CustomerINN)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Account)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Account)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Invoice)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Invoice)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Contract)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Contract)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Currency)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Currency)
+        </dd>
+        <dt class="col-sm-2">
+            Период продажи
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SaleFrom) - @Html.DisplayFor(model => model.SaleTo)
+        </dd>
+        <dt class="col-sm-2">
+            Загружен
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Created) @Html.DisplayFor(model => model.CreatedBy)
+            <a asp-page="/Files/File" asp-route-id="@Model.Id" asp-page-handler="Register"><i class="bi bi-cloud-download"></i></a>
+        </dd>
+    </dl>
+</div>

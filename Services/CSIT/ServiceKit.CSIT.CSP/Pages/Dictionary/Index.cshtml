@@ -1,0 +1,46 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.Dictionary.IndexModel
+@{
+    ViewData["Title"] = "Справочники";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel())
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<table class="table datatable sortable">
+    <thead>
+        <tr>
+            <th>
+                Наименование
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <a asp-page="/Signature/Index">
+                    Подписанты
+                </a>
+            </td>
+        </tr>
+        @if (User.IsInRole(BuiltinRoles.Administrator))
+        {
+            <tr>
+                <td>
+                    <a asp-page="/Clients/Index">
+                        Клиенты
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a asp-page="/Clients/ClientServices">
+                        Услуги по клиентам
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

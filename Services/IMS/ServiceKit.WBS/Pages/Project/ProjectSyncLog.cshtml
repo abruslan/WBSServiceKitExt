@@ -1,0 +1,37 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Project.ProjectSyncLogModel
+@{
+    ViewData["Title"] = "Журнал синхронизации проекта " + Model.WBS_Project.ProjectCode + " от " + Model.WBS_SyncLog.Created;
+    ViewData["PageTheme"] = "fullpage";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Проекты", "/Project/Index").Add($"Проект {Model.WBS_Project.ProjectCode}", $"/Project/Card?id={Model.WBS_Project.Id}"))
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table datatable sortable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncLogItems[0].Message)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncLogItems[0].Level)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WBS_SyncLogItems.OrderBy(r => r.Created))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Message)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

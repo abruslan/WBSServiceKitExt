@@ -1,0 +1,52 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Dictionary.SyncSystems.IndexModel
+
+@{
+    ViewData["Title"] = "Системы для публикации";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Справочники", "/Dictionary/Index"))
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-page="Create">Добавить новую</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncSystem[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncSystem[0].SystemType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WBS_SyncSystem[0].IsDeleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WBS_SyncSystem)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SystemType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

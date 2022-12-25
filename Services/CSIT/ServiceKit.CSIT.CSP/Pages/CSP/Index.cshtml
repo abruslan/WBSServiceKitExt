@@ -1,0 +1,86 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.CSP.IndexModel
+
+@{
+    ViewData["Title"] = "Список реестров";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel())
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a class="btn btn-primary" asp-page="Load"><i class="bi bi-cloud-upload"></i> Загрузить новый</a>
+</p>
+<div>
+    <table class="table datatable custom-table" style="zoom: 0.9;">
+        <thead>
+            <tr>
+                <th>Загружен</th>
+                @*<th>Дата реестра</th>*@
+                <th>Период</th>
+                <th>Исполнитель</th>
+                <th>Заказчик</th>
+                <th>Счет&nbsp;№</th>
+                <th>Акт №</th>
+                <th>Договор</th>
+                <th>Статус</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Register)
+            {
+                <tr class="@item.Status">
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Created)
+                        </a>
+                    </td>
+                    @*<td>
+                            @item.AccountDate.ToShortDateString()
+                        </td>*@
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">
+                            @item.SaleFrom.ToShortDateString() - @item.SaleTo.ToShortDateString()
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Contractor)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.CustomerName)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Account)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Invoice)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Contract)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-page="./Delete" asp-route-id="@item.Id"><img src="~/images/delete.svg" /></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

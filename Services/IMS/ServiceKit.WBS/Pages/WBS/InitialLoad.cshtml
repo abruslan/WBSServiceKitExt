@@ -1,0 +1,28 @@
+﻿@page
+@model ServiceKit.WBS.Pages.WBS.InitialLoadModel
+
+@{
+    ViewData["Title"] = "Первичная загрузка";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("ИСР", "./Index"))
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="text-danger">Внимание! Использовать операцию только для первичной загрузки!</div>
+<div class="row pt-4">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="submit" value="Загрузить" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

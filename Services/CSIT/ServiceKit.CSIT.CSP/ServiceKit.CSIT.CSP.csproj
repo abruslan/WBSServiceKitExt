@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-ServiceKit.CSIT.ESP-C68B6512-9800-4A08-843B-8DACA9D90636</UserSecretsId>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\icons\.github\preview.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\icons\.github\dependabot.yml" />
+    <None Include="wwwroot\icons\.github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include="wwwroot\icons\.github\ISSUE_TEMPLATE\icon-request.md" />
+    <None Include="wwwroot\icons\.github\release-drafter.yml" />
+    <None Include="wwwroot\icons\.github\workflows\codeql.yml" />
+    <None Include="wwwroot\icons\.github\workflows\deploy.yml" />
+    <None Include="wwwroot\icons\.github\workflows\release-notes.yml" />
+    <None Include="wwwroot\icons\.github\workflows\test.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.95.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\ServiceKit.EmailService\ServiceKit.EmailService.csproj" />
+    <ProjectReference Include="..\..\..\Core\ServiceKit.IdentityService\ServiceKit.IdentityService.csproj" />
+    <ProjectReference Include="..\..\..\Core\ServiceKit.WordProcessing\ServiceKit.WordProcessing.csproj" />
+    <ProjectReference Include="..\..\..\Helpers\ServiceKit.Helpers.Common\ServiceKit.Helpers.Common.csproj" />
+    <ProjectReference Include="..\..\..\Model\ServiceKit.Model\ServiceKit.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

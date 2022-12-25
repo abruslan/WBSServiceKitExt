@@ -1,0 +1,39 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.Report.DialogModel
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalCenterTitle">ОТЧЕТ</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div id="modalContentLg" class="modal-body">
+    <partial name="@Model.ViewName" model="@Model" />
+</div>
+<div class="modal-footer d-block">
+    <div class="d-flex flex-row align-items-center">
+        <div class="flex-xl-shrink-0 flex-lg-shrink-0">
+            <button type="button" class="btn btn-primary m-2" onclick="printDivExtra('modalContentLg')"><i class="bi bi-printer"></i> Печать</button>
+        </div>
+        <div class="flex-xl-shrink-0 flex-lg-shrink-0">
+            <form asp-page="/Shared/Word" method="post">
+                <input id="WordContent" name="WordContent" hidden />
+                <input id="FileName" name="FileName" value="Отчет.docx" hidden />
+                <input id="TemplateName" name="TemplateName" value="ReportTemplate.docx" hidden />
+                <input id="RemoveImages" name="RemoveImages" value="true" hidden />
+                <button type="submit" class="btn btn-primary m-2" onclick="beforeCallWord();"><i class="fa fa-file-word-o"></i> Документ</button>
+            </form>
+        </div>
+        <div class="flex-xl-shrink-0 flex-lg-shrink-0">
+            <button type="button" class="btn btn-secondary m-2" data-dismiss="modal">Закрыть</button>
+        </div>
+    </div>
+</div>
+<script>
+    function beforeCallWord() {
+        $('#WordContent').val($('#modalContentLg .report').html());
+    }
+</script>

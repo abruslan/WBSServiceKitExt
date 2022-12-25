@@ -1,0 +1,44 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "ABILITY";
+    Layout = "~/Pages/Shared/_Login.cshtml";
+}
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <span class="login100-form-avatar">
+        <img src="~/images/logo.png" alt="МГПУ">
+    </span>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="wrap-input100 validate-input m-t-30 m-b-5" data-validate="Укажите Email">
+        <input asp-for="Input.Email" class="input100" />
+        <span class="focus-input100" data-placeholder="Email"></span>
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+    <div class="wrap-input100 validate-input m-t-30 m-b-5" data-validate="Укажите пароль">
+        <input asp-for="Input.Password" class="input100" />
+        <span class="focus-input100" data-placeholder="Пароль"></span>
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+    <div class="wrap-input100 validate-input m-t-30 m-b-50" data-validate="Подтвердите пароль">
+        <input asp-for="Input.ConfirmPassword" class="input100" />
+        <span class="focus-input100" data-placeholder="Подтвердите пароль"></span>
+        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="container-login100-form-btn">
+        <button type="submit" class="login100-form-btn">Зарегистрироваться</button>
+    </div>
+    <ul class="login-more p-t-30">
+        <li>
+            <span class="txt1">
+                Уже есть учетная запись?
+            </span>
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Войти</a>
+        </li>
+    </ul>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

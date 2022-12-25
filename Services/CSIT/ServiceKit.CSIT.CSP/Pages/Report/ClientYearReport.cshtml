@@ -1,0 +1,256 @@
+﻿@using System.Linq
+@using Microsoft.EntityFrameworkCore
+@model ServiceKit.CSIT.CSP.Pages.Report.DialogModel
+@{
+    Layout = null;
+    var register = Model._context.Registers
+        .Include(r => r.Items)
+        .ThenInclude(r => r.ClientService)
+        .ThenInclude(r => r.ClientAnnex)
+        .Include(r => r.Items)
+        .ThenInclude(r => r.Client)
+        .FirstOrDefault(r => r.Id == Model.RegisterId);
+    var client = Model._context.Clients.FirstOrDefault(r => r.Id == Model.ClientId);
+    var annex = Model._context.ClientAnnexes.FirstOrDefault(r => r.Id == Model.ClientAnnexId);
+    decimal TableTotal = 0;
+
+    var signer = Model._context.Settings.Include(r => r.Signer).Where(r => !r.IsDeleted).FirstOrDefault()?.Signer ?? (new Signer());
+}
+
+<div class="report">
+    <style>
+        .report-content {
+            font-family: 'Times New Roman',Calibri,sans-serif;
+            font-size: 13px;
+        }
+
+        .report-header-1 {
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .report-header-text {
+            padding: 5px 0 5px 0;
+            text-align: justify;
+            text-indent: 25px;
+        }
+
+        .report-header-date {
+            text-align: right;
+            padding: 12px 0 12px 0;
+        }
+
+        .text-bold {
+            font-weight: 700;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .report-content p {
+            font-family: Arial,Calibri,sans-serif;
+        }
+
+        .report-content table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .report-content table.border thead, .report-content table.border tbody {
+                border: 1px solid #d3d3d3;
+            }
+
+                .report-content table.border tbody td, .report-content table.border thead th {
+                    border: 1px solid #d3d3d3;
+                    padding: 5px;
+                }
+
+            .report-content table.noborder {
+                border: 0px solid white;
+                border-spacing: 0;
+            }
+
+                .report-content table.noborder td {
+                    border: 0px solid white;
+                    padding: 3px;
+                }
+
+        .report-content .operator {
+            font-style: italic;
+            font-size: 12px;
+        }
+
+        .report-content .vtop {
+            vertical-align: top;
+        }
+
+        @@page {
+            size: A4;
+            margin: 11mm 17mm 11mm 17mm;
+        }
+
+        @@media print {
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+        }
+    </style>
+    <div class="report-content">
+
+
+        <div class="report-header">
+            @if (Model.IsDebug)
+            {
+            <div class="report-header-1 text-danger">ВНУТРЕННИЙ ОТЧЕТ</div>
+            }
+            else
+            {
+            <div class="report-header-1">ОТЧЕТ</div>
+            }
+            <div class="report-header-1">
+                о сервисах (веб-службах), доступ к которым действовал в отчетном периоде
+                по Договору на оказание услуг @client.Contract@(annex == null ? "" : ", "+annex.Name)
+            </div>
+            <div class="report-header-1">
+                за @register.SaleFrom.ToString("MMMM yyyy") г.
+            </div>
+            <div class="report-header-date">@register.SaleTo.ToLongDateString()</div>
+            <div class="report-header-text">
+                В соответствии с Договором на оказание услуг по предоставлению доступа к вэб-службам правообладателя компании Microsoft по программе Cloud Solution Provider (CSP)
+                ИСПОЛНИТЕЛЬ оказал услуги @client.GetName(), и предоставил доступ к следующим сервисам:
+            </div>
+            <div class="report-header-text">
+                1.	Доступ к сервисам, использование которых осуществлялось в отчетном периоде:
+            </div>
+        </div>
+        <table class="border" cellpadding="0" style="box-decoration-break: slice; -webkit-box-decoration-break: slice; ">
+            <thead>
+                <tr>
+                    <th class="text-center align-middle">№</th>
+                    <th class="text-center align-middle">Наименование услуг по предоставлению доступа к вэб-службам / сервисам</th>
+                    <th class="text-center align-middle">Цена, руб./год</th>
+                    @if (Model.IsDebug)
+                    {
+                        <th class="text-center align-middle">Цена, руб./день</th>
+                    }
+                    <th class="text-center align-middle">Кол-во раб. мест.</th>
+                    <th class="text-center align-middle">Дни использования</th>
+                    <th class="text-center align-middle">Период использования</th>
+                    <th class="text-center align-middle">Сумма, руб./год</th>
+                    @if (Model.IsDebug)
+                    {
+                    <th class="text-center align-middle">Закупочная, руб./год</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 0;}
+                @foreach (var item in register.Items.Where(r => r.Client == client && r.RegisterRatePeriod == PeriodType.Year && r.ClientService.ClientAnnex == annex).OrderBy(r => r.ClientService.Name))
+                {
+                    <tr>
+                        <td class="text-center align-middle">
+                            @(++i)
+                        </td>
+                        <td>@item.ClientService.Name</td>
+                        <td class="text-right align-middle ">
+                            @item.ClientService.YearPrice.ToString("N") <br />
+                        </td>
+                        @if (Model.IsDebug)
+                        {
+                            <td class="text-right align-middle ">
+                                @item.ReportRate.ToString("N")
+                            </td>
+                        }
+                        <td class="text-center align-middle ">
+                            @item.WorkPlaceCount
+                        </td>
+                        <td class="text-center align-middle ">
+                            @item.DayCount
+                        </td>
+                        <td class="text-center align-middle ">
+                            @item.PeriodFrom.ToString("dd.MM.yyyy") - @item.PeriodTo.ToString("dd.MM.yyyy")
+                        </td>
+                        <td class="text-right align-middle ">
+                            @{
+                                TableTotal += item.Total();
+                            }
+                            @item.Total().ToString("N")
+                        </td>
+                        @if (Model.IsDebug)
+                        {
+                        <td class="text-right align-middle ">
+                            @item.RegisterRate.ToString("N")
+                        </td>
+                        }
+                    </tr>
+                }
+                <tr>
+                    <td>
+                    </td>
+                    <td class="align-middle text-bold">ИТОГО</td>
+                    <td></td>
+                    @if (Model.IsDebug)
+                    {
+                        <td></td>
+                    }
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right align-middle text-bold">
+                        @TableTotal.ToString("N")
+                    </td>
+                    @if (Model.IsDebug)
+                    {
+                    <td></td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class="report-header-text">
+            @{ 
+                var NDS = Math.Round(TableTotal * 0.2m / 1.2m, 2);
+            }
+            2. Всего общая сумма, подлежащая уплате за услуги по предоставлению доступа к сервисам
+            за @register.SaleFrom.ToString("MMMM yyyy") в соответствии с условиями Договора, составляет
+            @TableTotal.ToString("N") руб. (@Сумма.Пропись(TableTotal, Валюта.Рубли)),
+            в т.ч. НДС 20% - @(NDS.ToString("N")) руб. (@Сумма.Пропись(NDS, Валюта.Рубли)).
+        </div>
+        <br />
+        @if (!Model.IsDebug)
+        {
+        <div>
+            <table class="table-sign">
+                <tr class="text-bold">
+                    <td width="45%">ЗАКАЗЧИК:           </td>
+                    <td width="10%">&nbsp;</td>
+                    <td width="45%">ИСПОЛНИТЕЛЬ:</td>
+                </tr>
+                <tr>
+                    <td class="vtop"><br />@client.GetName()       </td>
+                    <td></td>
+                    <td class="vtop">@signer.Position<br />@signer.Company<br /><br /></td>
+                </tr>
+                <tr>
+                    <td valign="top">__________________ <br />м.п. </td>
+                    <td></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td valign="top" style="width:140px;">__________________<br />м.п.</td>
+                                <td valign="top">@Html.Raw(signer.FullName.Replace("\r\n", "<br />"))</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        }
+    </div>
+</div>

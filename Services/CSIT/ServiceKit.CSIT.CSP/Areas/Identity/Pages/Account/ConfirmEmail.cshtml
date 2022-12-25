@@ -1,0 +1,18 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Подтверждение адреса электронной почты";
+    Layout = "~/Pages/Shared/_Login.cshtml";
+}
+
+@*<h1>@ViewData["Title"]</h1>*@
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+    <div class="login-box-footer">
+        <div class="form-group">
+            <p>
+                <a asp-page="./Login" class="login-box-footer">Вход в систему</a>
+            </p>
+        </div>
+
+    </div>

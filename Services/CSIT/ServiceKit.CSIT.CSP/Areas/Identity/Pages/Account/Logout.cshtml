@@ -1,0 +1,27 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "ABILITY";
+    Layout = "~/Pages/Shared/_Login.cshtml";
+}
+
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+            <button type="submit" class="nav-link btn btn-link text-dark">Нажмите для выхода из приложения</button>
+        </form>
+    }
+    else
+    {
+        <p>
+            Вы успешно вышли из системы
+        </p>
+        <ul class="login-more p-t-10">
+            <li>
+                <a asp-page="./Login">Вернуться на страницу входа</a>
+            </li>
+        </ul>
+    }
+}

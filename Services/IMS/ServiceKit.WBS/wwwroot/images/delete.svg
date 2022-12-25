@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #4e67af;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="prodlab_buttons_4" data-name="prodlab_buttons 4" class="cls-1" d="M66.5,695H64.522l-2.087,11.68A2.823,2.823,0,0,1,59.657,709h-8.09a2.821,2.821,0,0,1-2.77-2.282L46.509,695H44.5v-2h1.621v0H64.881v0H66.5v2Zm-17.954,0,2.132,10.927A1.337,1.337,0,0,0,51.99,707h7.236a1.336,1.336,0,0,0,1.315-1.1L62.491,695H48.547Zm2.952-6h8v2h-8v-2Z" transform="translate(-44.5 -689)"/>
+</svg>

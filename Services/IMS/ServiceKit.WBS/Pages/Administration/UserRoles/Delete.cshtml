@@ -1,0 +1,59 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Administration.UserRoles.DeleteModel
+
+@{
+    ViewData["Title"] = "Роли пользователей";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Список пользователей", "./Index"))
+}
+
+<h4>Удалить роль пользователя</h4>
+
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserRole.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserRole.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserRole.Role)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserRole.Role)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserRole.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserRole.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserRole.Created)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserRole.Created)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserRole.ModifiedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserRole.ModifiedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserRole.Modified)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserRole.Modified)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="UserRole.Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> 
+        <a asp-page="./Index" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>

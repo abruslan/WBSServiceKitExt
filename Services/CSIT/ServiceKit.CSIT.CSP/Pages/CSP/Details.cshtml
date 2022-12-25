@@ -1,0 +1,105 @@
+﻿@page
+@using ServiceKit.CSIT.CSP.Data.Entry
+@model ServiceKit.CSIT.CSP.Pages.CSP.DetailsModel
+
+@{
+    ViewData["Title"] = "Реестр за период " + Model.Register.SaleFrom.ToShortDateString() + " - " + Model.Register.SaleTo.ToShortDateString();
+    RegisterItem RegisterItem = new RegisterItem();
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Реестр", "/CSP/Index"))
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<ol class="breadcrumb">
+    @foreach (var status in Model.AvailableStatuses)
+    {
+        <li class="breadcrumb-item @(status==Model.Register.Status ? "current" : "" )">
+            @status.DisplayName()
+        </li>
+        @if (status != RegisterStatus.Archived)
+        {
+            <li class="pl-2 pr-2"> -&gt; </li>
+        }
+    }
+</ol>
+<div class="row">
+    <div class="col-12">
+        <form method="post">
+            <div class="row">
+                <div class="col-12">
+                    <input type="hidden" asp-for="Register.Id" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <div class="d-flex flex-row align-items-center">
+                            <div>
+                                @if (Model.Register.Status != Model.PrevStatus())
+                                {
+                                    <a asp-page="./ChangeStatus" asp-route-id="@Model.Register.Id" asp-route-status="@Model.PrevStatus()" class="btn btn-secondary">
+                                        <i class="bi bi-arrow-left-square"></i>&nbsp;&nbsp;Назад
+                                    </a>
+                                }
+                                @if (Model.Register.Status != Model.NextStatus())
+                                {
+                                    <a asp-page="./ChangeStatus" asp-route-id="@Model.Register.Id" asp-route-status="@Model.NextStatus()" class="btn btn-primary">
+                                        Дальше&nbsp;&nbsp;<i class="bi bi-arrow-right-square"></i>
+                                    </a>
+                                }
+                                @if (Model.Register.Status >= RegisterStatus.Checked)
+                                {
+                                    <a asp-page="./ChangeStatus" asp-route-id="@Model.Register.Id" asp-page-handler="GenerateTo1C" class="btn btn-primary">
+                                        <i class="bi bi-file-earmark-arrow-down"></i>&nbsp;&nbsp;Файлы для загрузки в 1С
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="collapsed-content @(Model.Register.Status == RegisterStatus.Imported ? "active" : "")">
+    <div class="collapsed-content-title noselect" onclick="$(this).closest('.collapsed-content').toggleClass('active');">
+        <div class="collapsed-content-title-expand">Параметры реестра</div>
+    </div>
+    <div class="collapsed-content-body">
+        <partial name="_CSPInfo" model="@Model.Register" />
+    </div>
+</div>
+
+
+<div class="collapsed-content @(Model.Register.Status == RegisterStatus.Imported ? "active" : "")">
+    <div class="collapsed-content-title noselect" onclick="$(this).closest('.collapsed-content').toggleClass('active');">
+        <div class="collapsed-content-title-expand">Шаг 1. Проверка загруженного реестра</div>
+    </div>
+    <div class="collapsed-content-body">
+        <partial name="_CSPRegister_1_Items" model="@Model.Register" />
+    </div>
+</div>
+
+@if (Model.Register.Status >= RegisterStatus.Checking)
+{
+    <div class="collapsed-content @(Model.Register.Status == RegisterStatus.Checking ? "active" : "")">
+        <div class="collapsed-content-title noselect" onclick="$(this).closest('.collapsed-content').toggleClass('active');">
+            <div class="collapsed-content-title-expand">Шаг 2. Проверка и заполнение тарифов</div>
+        </div>
+        <div class="collapsed-content-body">
+            <partial name="_CSPRegister_2_Services" model="@Model" />
+        </div>
+    </div>
+}
+
+@if (Model.Register.Status >= RegisterStatus.Checked)
+{
+    <div class="collapsed-content @(Model.Register.Status >= RegisterStatus.Checked ? "active" : "")">
+        <div class="collapsed-content-title noselect" onclick="$(this).closest('.collapsed-content').toggleClass('active');">
+            <div class="collapsed-content-title-expand">Шаг 3. Формирование отчетов</div>
+        </div>
+        <div class="collapsed-content-body">
+            <partial name="_CSPRegister_3_Reports" model="@Model" />
+        </div>
+    </div>
+}

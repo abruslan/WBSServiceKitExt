@@ -1,0 +1,102 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Request.DetailsModel
+
+@{
+    ViewData["Title"] = "Заявка";
+    ViewData["PageTheme"] = "fullpage";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Заявки", "./Index"))
+}
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input asp-for="WBS_Request.Id" hidden />
+    <div>
+        <h4>@ViewData["Title"] от @Model.WBS_Request.Created?.ToShortDateString()</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.WBS_Request.Status)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.WBS_Request.Status)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.WBS_Request.ProjectCode)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.WBS_Request.ProjectCode)
+            </dd>
+            <dt class="col-sm-2">
+                Наименование
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.WBS_Request.ProjectName)
+            </dd>
+            <dt class="col-sm-2">
+                Загружен
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.WBS_Request.Created) пользователем @Html.DisplayFor(model => model.WBS_Request.CreatedBy)
+                <a asp-page="/Files/File" asp-route-id="@Model.WBS_Request.Id" asp-page-handler="Register"><i class="bi bi-cloud-download"></i></a>
+            </dd>
+        </dl>
+    </div>
+    <div class="d-flex pb-2">
+        @if (Model.WBS_Request.Status == WBS_RequestStatus.New)
+        {
+            <a asp-page="./Edit" asp-route-id="@Model.WBS_Request.Id" class="btn btn-primary mr-2 popupform">
+                <i class="bi bi-pencil"></i>&nbsp;&nbsp;Редактировать
+            </a>
+        }
+        @if (Model.WBS_Request.Status == WBS_RequestStatus.New)
+        {
+            <button type="submit" asp-page-handler="Check" class="btn btn-primary mr-2">
+                <i class="bi bi-eye-fill"></i>&nbsp;&nbsp;Проверить
+            </button>
+            @*<a asp-page="./ChangeStatus" asp-route-id="@Model.WBS_Request.Id" asp-route-status="Checked" class="btn btn-primary mr-2">
+                <i class="bi bi-eye-fill"></i>&nbsp;&nbsp;Проверить
+            </a>*@
+        }
+        @if (Model.WBS_Request.Status == WBS_RequestStatus.Checked)
+        {
+            <a asp-page="./ChangeStatus" asp-route-id="@Model.WBS_Request.Id" asp-route-status="Approved" class="btn btn-primary mr-2">
+                <i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;&nbsp;Согласовать
+            </a>
+        }
+        @if (Model.WBS_Request.Status == WBS_RequestStatus.Approved)
+        {
+            <button type="submit" asp-page-handler="EvalRequest" class="btn btn-primary mr-2">
+                <i class="bi bi-pen"></i>&nbsp;&nbsp;Занести в базу
+            </button>
+            @*<a asp-page="./ChangeStatus" asp-route-id="@Model.WBS_Request.Id" asp-route-status="Completed" class="btn btn-primary mr-2">
+                <i class="bi bi-pen"></i>&nbsp;&nbsp;Занести в базу
+            </a>*@
+        }
+        @if (Model.WBS_Request.Status == WBS_RequestStatus.New || Model.WBS_Request.Status == WBS_RequestStatus.Checked)
+        {
+            <a asp-page="./ChangeStatus" asp-route-id="@Model.WBS_Request.Id" asp-route-status="Canceled" class="btn btn-danger mr-2">
+                <i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;&nbsp;Отклонить
+            </a>
+        }
+        @if (Model.WBS_Request.Status == WBS_RequestStatus.Checked || Model.WBS_Request.Status == WBS_RequestStatus.Checked)
+        {
+            <a asp-page="./ChangeStatus" asp-route-id="@Model.WBS_Request.Id" asp-route-status="New" class="btn btn-secondary mr-2">
+                <i class="bi bi-arrow-left-square"></i>&nbsp;&nbsp;Вернуть
+            </a>
+        }
+        @*<a asp-page="./ChangeStatus" asp-route-id="@Model.WBS_Request.Id" asp-route-status="New" class="btn btn-secondary ml-auto">
+            <i class="bi bi-arrow-left-square"></i>&nbsp;&nbsp;В начало (тестирование)
+        </a>*@
+    </div>
+</form>
+@switch (Model.WBS_Request.RequestType)
+{
+    case WBS_RequestType.Changes:
+        <partial name="Details_Changes" model="Model" />
+        break;
+    case WBS_RequestType.Project:
+        <partial name="Details_ProjectItems" model="Model" />
+        break;
+}

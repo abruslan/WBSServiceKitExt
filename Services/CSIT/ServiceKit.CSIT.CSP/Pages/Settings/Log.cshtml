@@ -1,0 +1,72 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.Settings.LogModel
+
+@{
+    ViewData["Title"] = "Log";
+}
+
+<h1>Log</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Log[0].Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Log[0].CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Log[0].Source)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Log[0].LogLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Log[0].Message)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Log[0].Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Log[0].Data)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Log) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LogLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

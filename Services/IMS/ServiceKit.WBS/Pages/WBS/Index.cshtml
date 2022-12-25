@@ -1,0 +1,105 @@
+﻿@page
+@model ServiceKit.WBS.Pages.WBS.IndexModel
+
+@{
+    ViewData["Title"] = "ИСР";
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", Model.BreadCrumb)
+}
+
+<h1>Иерархическая структура работ</h1>
+@if (Model.Current != null)
+{
+
+    <div>
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => Model.Current.Code)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => Model.Current.Code)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => Model.Current.Name)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => Model.Current.Name)
+            </dd>
+            @*<dt class="col-sm-4">
+                @Html.DisplayNameFor(model => Model.Current.ShortName)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => Model.Current.ShortName)
+            </dd>*@
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => Model.Current.FullName)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => Model.Current.FullName)
+            </dd>
+        </dl>
+    </div>
+}
+<table class="table datatable sortable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].ShortName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Modified)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @if (Model.hasChildren(item.Id))
+                    {
+                        <a asp-page="./Index" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Code)
+                        </a>
+                    }
+                    else
+                    {
+
+                        @Html.DisplayFor(modelItem => item.Code)
+                    }
+                </td>
+                <td>
+                    @if (Model.hasChildren(item.Id))
+                    {
+                        <a asp-page="./Index" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Name)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modified)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

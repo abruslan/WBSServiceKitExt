@@ -1,0 +1,51 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.CSP.ClientEditModel
+@{
+    Layout = null;
+}
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Client.Id" />
+    <input type="hidden" asp-for="registerId" />
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Клиент</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label asp-for="Client.Name" class="control-label"></label>
+            <input asp-for="Client.Name" class="form-control" disabled />
+            <span asp-validation-for="Client.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Client.INN" class="control-label"></label>
+            <input asp-for="Client.INN" class="form-control" disabled />
+            <span asp-validation-for="Client.INN" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Client.FullName" class="control-label"></label>
+            <input asp-for="Client.FullName" class="form-control" />
+            <span asp-validation-for="Client.FullName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Client.Contract" class="control-label"></label>
+            <input asp-for="Client.Contract" class="form-control" autofocus />
+            <span asp-validation-for="Client.Contract" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <input type="submit" value="Сохранить" class="btn btn-primary" asp-page="ClientEdit" />
+    </div>
+</form>
+<script>
+    setTimeout(function (e) { document.getElementById('Client_Contract').focus(); }, 500);
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

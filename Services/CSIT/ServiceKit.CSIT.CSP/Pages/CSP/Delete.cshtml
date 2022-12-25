@@ -1,0 +1,90 @@
+﻿@page
+@model ServiceKit.CSIT.CSP.Pages.CSP.DeleteModel
+
+@{
+    ViewData["Title"] = "Реестр за период " + Model.Register.SaleFrom.ToShortDateString() + " - " + Model.Register.SaleTo.ToShortDateString();
+}
+@section BreadCrumb {
+    @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Реестр", "/CSP/Index"))
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Вы уверены, что хотите удалить реестр вместе со связанными с ним данными?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Register.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Register.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Register.Contractor)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Register.Contractor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Register.ContractorINN)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Register.ContractorINN)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Register.CustomerName)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Register.CustomerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Register.CustomerINN)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Register.CustomerINN)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Register.Account)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Register.Account)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Register.Invoice)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Register.Invoice)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Register.Contract)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Register.Contract)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Register.Currency)
+        </dt>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Register.Currency)
+        </dd>
+        <dt class="col-sm-2">
+            Период продажи
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Register.SaleFrom) - @Html.DisplayFor(model => model.Register.SaleTo)
+        </dd>
+        <dt class="col-sm-2">
+            Загружен
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Register.Created) @Html.DisplayFor(model => model.Register.CreatedBy)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Register.Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-page="/CSP/Index">Отменить</a>
+    </form>
+</div>

@@ -1,0 +1,50 @@
+﻿@page
+@model ServiceKit.WBS.Pages.Request.LoadModel
+
+@{
+    ViewData["Title"] = "Загрузка заявки";
+}
+@section BreadCrumb {
+        @await Html.PartialAsync("_Breadcrumb", new BreadCrumbViewModel().Add("Заявки", "/Request/Index"))
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@*<h4>Выберите файл для загрузки</h4>
+    <hr />*@
+<div class="row pt-4">
+    <div class="col-md-12">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FileType" class="control-label">Выберите формат загружаемого файла</label>
+                <div class="control-radio">
+                    <input type="radio" asp-for="FileType" value="@WBS_RequestType.Project"  />
+                    <span>
+                        Загрузка полного проекта
+                        <a class="small popupform-lg" asp-page="./RequestProjectHelp"><i class="bi bi-info-circle"></i> Правила шаблона и проверки</a>
+                    </span>
+                    <br />
+                    <input type="radio" asp-for="FileType" value="@WBS_RequestType.Changes" />
+                    <span>Загрузка заявки с изменениями</span>
+                </div>
+                <span asp-validation-for="FileType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Upload" class="control-label">
+                    <span>Выберите файл в формате xlsx для загрузки.</span><br />
+                    <span class="small">Если файл для загрузки сохранен в старом формате Excel 97-2003, необходимо открыть файл в Excel и сохранить файл в новом формате Excel.</span>
+                </label>
+                <input type="file" asp-for="Upload" class="w-100" />
+                <span asp-validation-for="Upload" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Загрузить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
